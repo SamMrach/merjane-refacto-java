@@ -36,7 +36,11 @@ public class SeasonalProductStrategy implements AvailabilityStrategy {
             ns.sendOutOfStockNotification(product.getName());
             product.setAvailable(Integer.valueOf(0));
         } else {
-            ns.sendDelayNotification(product.getLeadTime(), product.getName());
+            if (product.getAvailable() > 0) {
+                product.setAvailable(Integer.valueOf(product.getAvailable() - 1));
+            } else {
+                ns.sendDelayNotification(product.getLeadTime(), product.getName());
+            }
         }
         repo.save(product);
     }

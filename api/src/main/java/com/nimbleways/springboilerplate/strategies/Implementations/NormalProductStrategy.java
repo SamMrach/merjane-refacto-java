@@ -23,7 +23,7 @@ public class NormalProductStrategy implements AvailabilityStrategy {
     public void process(Product product, ProductRepository repo, NotificationService ns) {
         if (isAvailable(product)) {
             product.setAvailable(Integer.valueOf(product.getAvailable() - 1));
-        } else if (product.getLeadTime() > 0) {
+        } else  {
             ns.sendDelayNotification(product.getLeadTime(), product.getName());
         }
         repo.save(product);
